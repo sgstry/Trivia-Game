@@ -1,0 +1,30 @@
+#game {
+	height: 700px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: #cccccc;
+	opacity: .9;
+}
+
+.row {
+	height: 33%;
+}
+
+#intro {
+	height: 100%;
+}
+
+#start {
+	display: table;
+	margin: 0 auto;
+}
+
+#message {
+	display: table;
+	margin: 0 auto;
+}
+
+.wrapper {
+	margin: 0 auto;
+	width: 50%;
+}
