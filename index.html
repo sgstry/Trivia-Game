@@ -23,13 +23,27 @@
             <span id="message">Trivia Game!</span>
             <br>
             <br>
-            <button id="start">Start</button>
+            <div id="buttons">
+              <button id="start">Start</button>
+              <button id="next" style="display:none">Next Question</button>
+            </div>
             <br>
+            <br>
+            <div id="timer">00:00</div>
             <br>
           </div>
         </div>
       </div>
       <div class="row">
+        <div id="questions" class="col-md-12">
+          <span id="question" style="display:none"> Question 1: </span>
+          <span id="endRoundMessage" style="display:none">Oops, time's up! The correct answer is: </span>
+          <br>
+          <div id="choiceA" class="answerChoice" style="display:none">Choice A</div>
+          <div id="choiceB" class="answerChoice" style="display:none">Choice B</div>
+          <div id="choiceC" class="answerChoice" style="display:none">Choice C</div>
+          <div id="choiceD" class="answerChoice" style="display:none">Choice D</div>
+        </div>
       </div>
     </div>
 

@@ -14,7 +14,16 @@
 	height: 100%;
 }
 
+#buttons {
+	margin: 0 auto;
+}
+
 #start {
+	display: table;
+	margin: 0 auto;
+}
+
+#next {
 	display: table;
 	margin: 0 auto;
 }
@@ -22,6 +31,32 @@
 #message {
 	display: table;
 	margin: 0 auto;
+}
+
+#timer {
+	display: table;
+	margin: 0 auto;
+}
+
+#endRoundMessage {
+	display: table;
+	margin: 0 auto;
+}
+
+#question {
+	display: table;
+	margin: 0 auto;
+}
+
+.answerChoice {
+	display: table;
+	margin: 0 auto;
+	background-color: white;
+	width: 150px;
+	height: 30px;
+	margin-top: 10px;
+	text-align: center;
+	line-height: 2;
 }
 
 .wrapper {
