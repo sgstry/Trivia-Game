@@ -103,6 +103,31 @@ $(document).ready(function() {
 		    clearInterval(intervalId);
 		  },
 
+		  wait: function() {
+		  	stopwatch.time = 0;
+		  	clearInterval(intervalId);
+		  	intervalId = setInterval(stopwatch.waitCount, 1000);
+		  },
+
+		  waitCount: function() {
+		  	stopwatch.time++;
+		  	if(stopwatch.time === 3) {
+		  		if(game.currentIndex < game.numberOfQuestions) {
+			  		stopwatch.reset();
+			  		clearInterval(intervalId);
+			  		$("#endRoundMessage").css("display", "none");
+	    			$("#next").css("display", "none");
+	    			$(".answerChoice").css("background-color", "white");
+	    			answerChosen = false;
+	    			timeIsUp = false;
+			  		nextQuestion();
+		  		}
+		  		else {
+		  			console.log("end of game");
+		  		}	
+		  	}
+		  },
+
 		  count: function() {
 		    stopwatch.time++;
 		    var convertedTime = stopwatch.timeConverter(stopwatch.time);
@@ -118,13 +143,14 @@ $(document).ready(function() {
 
 		    	if(game.currentIndex < game.numberOfQuestions) {
 		    		$("#endRoundMessage").text(timeUpMessage + game.questions[game.currentIndex-1].choices[game.questions[game.currentIndex-1].correct]);
-		    		$("#next").css("margin-top", "20px");
-		    		$("#next").css("display", "table");
+		    		// $("#next").css("margin-top", "20px");
+		    		// $("#next").css("display", "table");
 		    	} else {
 		    		$("#endRoundMessage").text("Game over! You scored a "+numCorrect+" out of "+game.numberOfQuestions);
 		    	}
 
 		    	$("#endRoundMessage").css("display", "table");
+		    	stopwatch.wait();
 		    }
 		  },
 
@@ -176,8 +202,8 @@ $(document).ready(function() {
 			numCorrect++;
 			if(game.currentIndex < game.numberOfQuestions) {
 				$("#endRoundMessage").text(congratsMessage);
-		    	$("#next").css("margin-top", "20px");
-		    	$("#next").css("display", "table");
+		    	// $("#next").css("margin-top", "20px");
+		    	// $("#next").css("display", "table");
 		    } else {
 		    	$("#endRoundMessage").text("Game over! You scored a "+numCorrect+" out of "+game.numberOfQuestions);
 		    }
@@ -194,14 +220,15 @@ $(document).ready(function() {
 			numIncorrect++;
 			if(game.currentIndex < game.numberOfQuestions) {
 				$("#endRoundMessage").text(loserMessage);
-		    	$("#next").css("margin-top", "20px");
-		    	$("#next").css("display", "table");
+		    	// $("#next").css("margin-top", "20px");
+		    	// $("#next").css("display", "table");
 		    } else {
 		    	$("#endRoundMessage").text("Game over! You scored a "+numCorrect+" out of "+game.numberOfQuestions);
 		    }
 
 		    $("#endRoundMessage").css("display", "table");
 		}
+		stopwatch.wait();
 	});
 
 	function nextQuestion() {
