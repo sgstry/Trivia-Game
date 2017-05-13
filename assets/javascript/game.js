@@ -1,29 +1,39 @@
 
 var game = {
 	questions: [{
-					question: "This is question1",
-					choices: ["This is choice 1", "This is choice 2", "This is choice 3", "This is choice 4"],
-					correct: 1
+					question: "Which of the following teams has won the English Premier League title the most?",
+					choices: ["Chelsea", "Arsenal", "Manchester United", "Liverpool"],
+					images: ["assets/images/ch_logo.png","assets/images/ars_logo.png","assets/images/mu_logo.png","assets/images/liv_logo.png"],
+					correct: 2,
+					guessedAnswer: ""
 				},
 	            {
-					question: "This is question2",
-					choices: ["This is choice 1", "This is choice 2", "This is choice 3", "This is choice 4"],
-					correct: 0
+					question: "Which player earned the Best Player of the Year award last year? (2016)",
+					choices: ["Cristiano Ronaldo", "Neymar", "Luis Suarez", "Lionel Messi"],
+					images: ["assets/images/cr7_pic.jpg","assets/images/neymar.jpg","assets/images/suarez.png","assets/images/messi.png"],
+					correct: 0,
+					guessedAnswer: ""
 				},
 	            {
-					question: "This is question3",
-					choices: ["This is choice 1", "This is choice 2", "This is choice 3", "This is choice 4"],
-					correct: 2
+					question: "Which of the following teams won the UEFA Champions League last year? (2016)",
+					choices: ["Barcelona", "Chelsea", "Bayern Munich", "Real Madrid"],
+					images: ["assets/images/barc_logo.png","assets/images/ch_logo.png","assets/images/bm_logo.png","assets/images/rm_logo.png"],
+					correct: 3,
+					guessedAnswer: ""
 				},
 				  {
-					question: "This is question4",
-					choices: ["This is choice 1", "This is choice 2", "This is choice 3", "This is choice 4"],
-					correct: 3
+					question: "Which country won the last World Cup? (2014)",
+					choices: ["Brazil", "Germany", "Argentina", "Spain"],
+					images: ["assets/images/braz.png","assets/images/germany.png","assets/images/argen.png","assets/images/spain.png"],
+					correct: 1,
+					guessedAnswer: ""
 				},
 			    {
-					question: "This is question5",
-					choices: ["This is choice 1", "This is choice 2", "This is choice 3", "This is choice 4"],
-					correct: 1
+					question: "Who scored the most goals in the English Premier League this season? (2017)",
+					choices: ["Zlatan Ibrahimovic", "Diego Costa", "Romelu Lukaku", "Eden Hazard"],
+					images: ["assets/images/zlatan.jpg","assets/images/diego.png","assets/images/romelu.png","assets/images/eden.png"],
+					correct: 2,
+					guessedAnswer: ""
 				}],
 	currentIndex: 0,
 	numberOfQuestions: 5
@@ -42,6 +52,62 @@ var numIncorrect = 0;
 
 
 $(document).ready(function() {
+
+	function playAgain() {
+		game.currentIndex = 0;
+		for(var i=0;i<game.questions.length;i++) {
+			game.questions[i].guessedAnswer = "";
+		}
+		clearInterval(intervalId);
+		answerChosen = false;
+		timeIsUp = false;
+		numCorrect = 0;
+		numIncorrect = 0;
+
+		$("#results").css("display", "none");
+		$("#game").css("background-color", "#cccccc");
+		$("#game").css("border", "none");
+		$("#timer").css("display", "table");
+		$("#start").css("display", "table");
+		$("#playAgain").css("display", "none");
+		$("#endRoundMessage").css("display", "none");
+		$("#resultsDetail").empty();
+
+		$("#imageTL").css("display", "none");
+		$("#imageTR").css("display", "none");
+		$("#imageBL").css("display", "none");
+		$("#imageBR").css("display", "none");
+		$("#choiceA").css("display", "none");
+		$("#choiceA").css("background-color", "white");
+		$("#choiceB").css("display", "none");
+		$("#choiceB").css("background-color", "white");
+		$("#choiceC").css("display", "none");
+		$("#choiceC").css("background-color", "white");
+		$("#choiceD").css("display", "none");
+		$("#choiceD").css("background-color", "white");
+		$("#answersTop").css("display", "block");
+		$("#answersBottom").css("display", "block");
+	}
+
+	function showResults() {
+		$("#timer").css("display", "none");
+		$("#question").css("display", "none");
+		$("#playAgain").css("display", "table");
+		$("#answersTop").css("display", "none");
+		$("#answersBottom").css("display", "none");
+		$("#game").css("background-color", "white");
+		$("#game").css("border", "solid");
+
+		$("#results").css("display", "block");
+		for(var i = 0;i < game.questions.length;i++) {
+			var question = $("<div>"+game.questions[i].question+"</div>");
+			$("#resultsDetail").append($(question));
+			var result = $("<div>"+"You answered: "+game.questions[i].guessedAnswer+". The correct answer was: "+game.questions[i].choices[game.questions[i].correct]+".</div>");
+			$("#resultsDetail").append($(result));
+			var br = $("<br>");
+			$("resultsDetail").append($(br));
+		}
+	}
 
 	function highlightIncorrectAnswers() {
 		switch (game.questions[game.currentIndex].correct) {
@@ -123,7 +189,9 @@ $(document).ready(function() {
 			  		nextQuestion();
 		  		}
 		  		else {
-		  			console.log("end of game");
+		  			stopwatch.reset();
+			  		clearInterval(intervalId);
+			  		showResults();
 		  		}	
 		  	}
 		  },
@@ -132,13 +200,13 @@ $(document).ready(function() {
 		    stopwatch.time++;
 		    var convertedTime = stopwatch.timeConverter(stopwatch.time);
 		    $("#timer").html(convertedTime);
-		    console.log(stopwatch.time);
 		    if(stopwatch.time === 10) {
 		    	stopwatch.stop();
 		    	timeIsUp = true;
 		    	answerChosen = true;
 		    	highlightCorrectAnswer();
 		    	highlightIncorrectAnswers();
+		    	game.questions[game.currentIndex].guessedAnswer = "Ran out of time";
 		    	game.currentIndex++;
 
 		    	if(game.currentIndex < game.numberOfQuestions) {
@@ -180,6 +248,10 @@ $(document).ready(function() {
 		stopwatch.start();
 	});
 
+	$("#playAgain").on("click", function() {
+		playAgain();
+	});
+
 	$(".answerChoice").mouseover(function(){
 		if(!answerChosen) {
 			$(this).css("background-color", "yellow");
@@ -198,6 +270,7 @@ $(document).ready(function() {
 			clearInterval(intervalId);
 			$(this).css("background-color", "green");
 			answerChosen = true;
+			game.questions[game.currentIndex].guessedAnswer = $(this).text();
 			game.currentIndex++;
 			numCorrect++;
 			if(game.currentIndex < game.numberOfQuestions) {
@@ -216,6 +289,7 @@ $(document).ready(function() {
 			$(this).css("background-color", "red");
 			highlightCorrectAnswer();
 			answerChosen = true;
+			game.questions[game.currentIndex].guessedAnswer = $(this).text();
 			game.currentIndex++;
 			numIncorrect++;
 			if(game.currentIndex < game.numberOfQuestions) {
@@ -237,12 +311,20 @@ $(document).ready(function() {
 	    $("#question").css("display", "table");
 	    $("#choiceA").text(game.questions[game.currentIndex].choices[0]);
 	    $("#choiceA").css("display", "table");
+	    $("#imageTL").attr("src", game.questions[game.currentIndex].images[0]);
+	    $("#imageTL").css("display", "table");
 	    $("#choiceB").text(game.questions[game.currentIndex].choices[1]);
 	    $("#choiceB").css("display", "table");
+	    $("#imageTR").attr("src", game.questions[game.currentIndex].images[1]);
+	    $("#imageTR").css("display", "table");
 	    $("#choiceC").text(game.questions[game.currentIndex].choices[2]);
 	    $("#choiceC").css("display", "table");
+	    $("#imageBL").attr("src", game.questions[game.currentIndex].images[2]);
+	    $("#imageBL").css("display", "table");
 	    $("#choiceD").text(game.questions[game.currentIndex].choices[3]);
 	    $("#choiceD").css("display", "table");
+	    $("#imageBR").attr("src", game.questions[game.currentIndex].images[3]);
+	    $("#imageBR").css("display", "table");
 	}
 
 	$("#next").on("click", function() {

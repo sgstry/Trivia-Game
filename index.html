@@ -15,36 +15,53 @@
 
   <body>
     <div id="game" class="container">
-      <div class="row">
+      <div id="headerRow" class="row">
+      	<div class="jumbotron jumbotron-fluid">
+  			<div class="container">
+    			<h1 class="display-3">Fútbol Frenzy Trivia!</h1>
+    			<p class="lead">Find out how in touch you are with your inner soccer fan.</p>
+  			</div>
+		</div>
       </div>
-      <div class="row" id="startRow">
+      <div id="startRow" class="row">
         <div id="intro" class="col-md-12">
           <div class="wrapper">
-            <span id="message">Trivia Game!</span>
-            <br>
-            <br>
-            <div id="buttons">
-              <button id="start">Start</button>
-              <button id="next" style="display:none">Next Question</button>
-            </div>
-            <br>
-            <br>
             <div id="timer">00:00</div>
-            <br>
+            <button id="start">Start</button>
+			<span id="question" style="display:none"> Question 1: </span>
+			<span id="endRoundMessage" style="display:none">Oops, time's up! The correct answer is: </span>
+			<button id="playAgain" style="display:none">Play Again!</button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div id="questions" class="col-md-12">
-          <span id="question" style="display:none"> Question 1: </span>
-          <span id="endRoundMessage" style="display:none">Oops, time's up! The correct answer is: </span>
-          <br>
-          <div id="choiceA" class="answerChoice" style="display:none">Choice A</div>
-          <div id="choiceB" class="answerChoice" style="display:none">Choice B</div>
-          <div id="choiceC" class="answerChoice" style="display:none">Choice C</div>
-          <div id="choiceD" class="answerChoice" style="display:none">Choice D</div>
-        </div>
-      </div>
+      <div id="answersTop" class="container-fluid">
+	      <div class="row">
+	      	<div id="topLeft" class="col-md-6">
+	      		<div class="answerDisplay"><img id="imageTL" style="display:none"></div>
+	      		<div id="choiceA" class="answerChoice" style="display:none">Choice A</div>
+	      	</div>
+	      	<div id="topRight" class="col-md-6">
+	      		<div class="answerDisplay clearfix"><img id="imageTR" style="display:none"></div>
+	        	<div id="choiceB" class="answerChoice" style="display:none">Choice B</div>
+	        </div>
+	      </div>
+	  </div>
+	  <div id="answersBottom" class="container-fluid">
+	      <div class="row">
+	      	<div id="bottomLeft" class="col-md-6 clearfix">
+	      		<div class="answerDisplay"><img id="imageBL" style="display:none"></div>
+	      		<div id="choiceC" class="answerChoice" style="display:none">Choice C</div>
+	      	</div>
+	      	<div id="bottomRight" class="col-md-6">
+	      		<div class="answerDisplay"><img id="imageBR" style="display:none"></div>
+	        	<div id="choiceD" class="answerChoice" style="display:none">Choice D</div>
+	        </div>
+	      </div>
+	  </div>
+	  <div id="results" class="row" style="display:none">
+	  	<div id="resultsDetail" class="col-md-12">
+	  	</div>
+	  </div>
     </div>
 
 
